@@ -6,7 +6,15 @@ using System.Threading.Tasks;
 
 namespace Project_0App.App
 {
-    public class Person
+    interface Person
     {
+        //Properties
+        public string? _Username { get; }
+        public string? _Password { get; }
+        public int _ID { get; }
+
+        // Methods
+        public void DisplayStoreOrderHistory();
+
     }
 }
