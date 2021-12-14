@@ -10,7 +10,7 @@ public class LoginTest
     {
         // Arrange
         Login myLogin = new Login();
-        myLogin.LoginScreen();
+        myLogin.LoginScreen(MainProgram.Mode.Login);
 
         // Act
 
