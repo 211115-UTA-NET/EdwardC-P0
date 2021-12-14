@@ -29,10 +29,10 @@ namespace Project_0App.App
         {
             if(userName != null && password != null)
             {
-                if(userName.Equals(_Username) )
-                {
+                //if(userName.Equals(_Username) )
+                //{
 
-                }
+                //}
 
             }
             else
