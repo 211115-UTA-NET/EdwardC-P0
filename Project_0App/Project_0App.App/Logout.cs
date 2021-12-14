@@ -8,5 +8,10 @@ namespace Project_0App.App
 {
     public class Logout
     {
+        public void SignoutOrOrderMore()
+        {
+            // prompt user to sign out or continue order other item
+
+        }
     }
 }
