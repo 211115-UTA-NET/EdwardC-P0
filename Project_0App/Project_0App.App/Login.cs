@@ -12,7 +12,7 @@ namespace Project_0App.App
         public MainProgram.Mode LoginScreen(MainProgram.Mode myMode)
         {
             int input;
-            bool TryAgain = false;
+            bool TryAgain;
 
             do
             {
