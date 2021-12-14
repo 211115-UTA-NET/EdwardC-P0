@@ -29,33 +29,34 @@
                         break;
                     case Mode.NewCustomer: 
                         Console.WriteLine("\nNew Customer"); 
-                        newCustomer.EnterNewCustomer(); 
+                        newCustomer.EnterNewCustomer(ref myMode); 
                         break;
                     case Mode.ReturnedCustomer: 
                         Console.WriteLine("\nReturned Customer"); 
-                        returnedCustomer.EnterReturnedCustomer(); 
+                        //returnedCustomer.EnterReturnedCustomer(ref myMode); 
                         break;
                     case Mode.Manager: 
                         Console.WriteLine("\nManager");
                         //manager.EnterManager();
                         break;
                     case Mode.CustomerRequest: 
-                        Console.WriteLine("Cumtomer Request"); 
+                        Console.WriteLine("\nCumtomer Request"); 
+                        customerRequest.EnterCustomerRequest(ref myMode);
                         break;
                     case Mode.ManagerRequest: 
-                        Console.WriteLine("Manager Request"); 
+                        Console.WriteLine("\nManager Request"); 
                         break;
                     case Mode.SetOrder: 
-                        Console.WriteLine("Set Order"); 
+                        Console.WriteLine("\nSet Order"); 
                         break;
                     case Mode.ProcessOrder: 
-                        Console.WriteLine("Process Order"); 
+                        Console.WriteLine("\nProcess Order"); 
                         break;
                     case Mode.Logout: 
-                        Console.WriteLine("Log out"); 
+                        Console.WriteLine("\nLog out"); 
                         break;
                     case Mode.Exit: 
-                        Console.WriteLine("Exit"); 
+                        Console.WriteLine("\nExit"); 
                         programRun = false; 
                         break;
                 }
