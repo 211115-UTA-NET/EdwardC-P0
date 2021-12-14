@@ -9,10 +9,41 @@ namespace Project_0App.App
     public class NewCustomer
     {
         // Add Method in Dec 11, 2021
-        public void EnterNewCustomer()
+        public void EnterNewCustomer(ref MainProgram.Mode mymode)
         {
-            Console.WriteLine("Test in NewCustomer.cs");
-            Console.ReadLine();
+            List<string> inputs = new List<string>();
+            string? input;
+
+            Console.WriteLine("Please enter the information");
+            for(int i = 0; i < 6; i++)
+            {
+                switch(i)
+                {
+                    case 0: 
+                        Console.Write("First Name: "); 
+                        break;
+                    case 1: 
+                        Console.Write("Last Name: "); 
+                        break;
+                    case 2: 
+                        Console.Write("Home Address: ");
+                        break;
+                    case 3: 
+                        Console.Write("Phone Number: "); 
+                        break;
+                    case 4:
+                        Console.Write("Username: ");
+                        break;
+                    case 5:
+                        Console.Write("Password: ");
+                        break;
+                }
+                input = Console.ReadLine();
+                if (input != null)
+                    inputs.Add(input);
+            }
+
+             mymode = MainProgram.Mode.CustomerRequest;
         }
     }
 }
