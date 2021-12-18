@@ -9,10 +9,10 @@ namespace Project_0App.App
     public class Login
     {
         // Modify Switch statment in Dec 11, 2021
-        public MainProgram.Mode LoginScreen(MainProgram.Mode myMode)
+        public void LoginScreen(ref MainProgram.Mode myMode)
         {
             int input;
-            bool TryAgain;
+            bool TryAgain = false;
 
             do
             {
@@ -21,15 +21,24 @@ namespace Project_0App.App
                 {
                     switch (input)
                     {
-                        case 1: return MainProgram.Mode.NewCustomer;
-                        case 2: return MainProgram.Mode.ReturnedCustomer;
-                        case 3: return MainProgram.Mode.Manager;
-                        case 4: return MainProgram.Mode.Exit;
+                        case 1: 
+                            myMode = MainProgram.Mode.NewCustomer;
+                            break;
+                        case 2: 
+                            myMode = MainProgram.Mode.ReturnedCustomer; 
+                            break;
+                        case 3: 
+                            myMode = MainProgram.Mode.Manager; 
+                            break;
+                        case 4: 
+                            myMode = MainProgram.Mode.Exit; 
+                            break;
                         default: 
                             TryAgain = true;
                             Console.WriteLine("Your input don't mathc any menu. Please try again.\n");
                             break;
                     }
+                    if (1 <= input && input <= 4) break;
                 }
                 else
                 {
@@ -38,7 +47,7 @@ namespace Project_0App.App
                 }
             }
             while (TryAgain);
-            return MainProgram.Mode.Exit;
+            
         }
     }
 }

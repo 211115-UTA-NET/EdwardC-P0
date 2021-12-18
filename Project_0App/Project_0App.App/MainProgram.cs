@@ -25,7 +25,7 @@
                 {
                     case Mode.Login: 
                         Console.WriteLine("Log in"); 
-                        myMode = myLogin.LoginScreen(myMode); 
+                        myLogin.LoginScreen(ref myMode); 
                         break;
                     case Mode.NewCustomer: 
                         Console.WriteLine("\nNew Customer"); 
@@ -33,7 +33,7 @@
                         break;
                     case Mode.ReturnedCustomer: 
                         Console.WriteLine("\nReturned Customer"); 
-                        //returnedCustomer.EnterReturnedCustomer(ref myMode); 
+                        returnedCustomer.EnterReturnedCustomer(ref myMode); 
                         break;
                     case Mode.Manager: 
                         Console.WriteLine("\nManager");

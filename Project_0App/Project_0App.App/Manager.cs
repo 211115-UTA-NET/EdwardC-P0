@@ -10,7 +10,7 @@ namespace Project_0App.App
     {
         public string? _Username { get; }
         public string? _Password { get; }
-        public int _ID { get; set; }
+        public int _Id { get; }
 
         public Manager(string username, string password)
         {

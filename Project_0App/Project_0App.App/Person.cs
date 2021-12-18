@@ -11,7 +11,7 @@ namespace Project_0App.App
         //Properties
         public string? _Username { get; }
         public string? _Password { get; }
-        public int _ID { get; }
+        public int _Id { get; }
 
         // Methods
         public void DisplayStoreOrderHistory();
