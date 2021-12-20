@@ -57,3 +57,20 @@ VALUES
 -- WHERE CustomerId = 9;
 -- DELETE FROM Customers
 -- WHERE FirstName = 'Mich';
+
+
+--Add Invoices, InvoiceHistory, InvoiceList
+
+INSERT Invoices (CustomerId, StoreId)
+VALUES (1, 2);
+
+INSERT InvoiceHistory (InvoiceId, InvoiceDate)
+VALUES (1, '2000-04-25')
+
+INSERT InvoiceList (InvoiceId, ItemName, ItemQuantity, TotalPrice)
+VALUES (1, 'Shimano Altus FC-M311 Crankset', 3, 164)
+
+-- Modify the store's inventory decrease
+UPDATE StoreItems
+SET ItemQuantity = (ItemQuantity + 1)
+WHERE ItemName = 'Shimano Altus FC-M311 Crankset' AND StoreId = 2;
