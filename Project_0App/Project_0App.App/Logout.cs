@@ -20,10 +20,5 @@ namespace Project_0App.App
                 myMode = MainProgram.Mode.SetOrder;
 
         }
-
-        public void SignOut() // For Manager
-        {
-
-        }
     }
 }
