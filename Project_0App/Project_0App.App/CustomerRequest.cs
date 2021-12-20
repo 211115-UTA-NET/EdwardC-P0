@@ -8,27 +8,31 @@ namespace Project_0App.App
 {
     public class CustomerRequest
     {
-        public void EnterCustomerRequest(ref MainProgram.Mode myMode)
+        public void EnterCustomerRequest(ref MainProgram.Mode myMode, int CustomerId, ref int StoreId)
         {
+            DatabaseConnect db = new DatabaseConnect();
             int input;
-            bool TryAgain = false;
+            bool TryAgain = true;
+
+            GetStoreLocation(db, ref StoreId);
 
             do
             {
-                Console.WriteLine("Please choose a number from menu:\n1. Check your order hisoty\n2. See item's information" +
+                Console.WriteLine("\nPlease choose a number from menu:\n1. Check your order hisoty\n2. See item's information" +
                                   "\n3. Check store history\n4. Ready to order items\n5. Exit");
                 if (int.TryParse(Console.ReadLine(), out input))
                 {
                     switch (input)
                     {
                         case 1:
-                            // Go to CustomerOrderHistory.cs
+                            db.DisplayCustomerOrderHistory(CustomerId);
                             break;
                         case 2:
                             // Got to OrderDetail.cs
+                            db.DisplayOrderDetail();
                             break;
                         case 3: 
-                            // Go to StoreOrderHistory.cs
+                            db.DisplayStoreOrderHistory(StoreId);
                             break;
                         case 4:
                             // Go to SetOrder.cs
@@ -53,6 +57,27 @@ namespace Project_0App.App
                 }
             }
             while(TryAgain);
+        }
+
+        static void GetStoreLocation(DatabaseConnect db, ref int storeId)
+        {
+            bool IsChoose = false;
+            Console.WriteLine("Pick a location followed: ");
+            db.getStoreLocation();
+
+            while(!IsChoose)
+            {
+                if(int.TryParse(Console.ReadLine(), out storeId))
+                {
+                    IsChoose = true;
+                }
+                else
+                {
+                    Console.WriteLine("Your input is invalid. Try again.");
+                }
+            }
+
+
         }
     }
 }
