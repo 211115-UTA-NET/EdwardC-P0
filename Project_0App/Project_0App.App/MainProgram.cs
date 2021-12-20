@@ -48,7 +48,8 @@
                         customerRequest.EnterCustomerRequest(ref myMode, CustomerId, ref StoreId);
                         break;
                     case Mode.ManagerRequest: 
-                        Console.WriteLine("\nManager Request"); 
+                        Console.WriteLine("\nManager Request");
+                        managerRequest.EnterRequest(ref myMode);
                         break;
                     case Mode.SetOrder: 
                         Console.WriteLine("\nSet Order");
