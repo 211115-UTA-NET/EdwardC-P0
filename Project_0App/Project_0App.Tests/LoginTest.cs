@@ -10,7 +10,10 @@ public class LoginTest
     {
         // Arrange
         Login myLogin = new Login();
-        myLogin.LoginScreen(MainProgram.Mode.Login);
+        MainProgram.Mode myMode = MainProgram.Mode.Login;
+        int CustomerId = 0;
+
+        myLogin.LoginScreen(ref myMode, ref CustomerId);
 
         // Act
 
