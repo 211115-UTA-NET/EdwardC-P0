@@ -144,6 +144,30 @@ namespace Project_0App.App
             connection.Close();
         }
 
+        public void RetrieveAllStoreItems()
+        {
+            int numLoop = 1;
+
+            string connectionString = File.ReadAllText("C:/Users/rootb/Revature/Database_File/ConnectBikeShop.txt");
+            using SqlConnection connection = new(connectionString);
+            connection.Open();
+            using IDbCommand command = new SqlCommand(@$"SELECT StoreItems.ItemName, StoreItems.ItemQuantity, StoreLocations.StoreLocation
+                                                        FROM StoreItems
+                                                        INNER JOIN StoreLocations ON StoreLocations.StoreId = StoreItems.StoreId
+                                                        ;", connection);
+            using IDataReader reader = command.ExecuteReader();
+            while (reader.Read())
+            {
+                string ItemName = reader.GetString(0);
+                int ItemDetail = reader.GetInt32(1);
+                string Location = reader.GetString(2);
+
+                Console.WriteLine($"{numLoop}) Item Name: {ItemName}\n   Quantity: {ItemDetail}\n   Location: {Location}\n");
+                numLoop++;
+            }
+            connection.Close();
+        }
+
         public decimal RetrieveInvoices(int num, string item, int quantity, ref List<decimal> TotalPrices)
         {
             decimal totalPrice = 0;
@@ -254,6 +278,34 @@ namespace Project_0App.App
                                                         INNER JOIN InvoiceList ON InvoiceList.InvoiceId = Invoices.InvoiceId
                                                         INNER JOIN StoreLocations On StoreLocations.StoreId = Invoices.StoreId
                                                         WHERE Invoices.StoreId = {StoreId};", connection);
+            using IDataReader reader = command.ExecuteReader();
+            while (reader.Read())
+            {
+                int InvoiceId = reader.GetInt32(0);
+                DateTime date = reader.GetDateTime(1);
+                string ItemName = reader.GetString(2);
+                int ItemQuantity = reader.GetInt32(3);
+                decimal TotalPrice = reader.GetDecimal(4);
+                string Location = reader.GetString(5);
+
+                Console.WriteLine($"\nInvoice: {InvoiceId}, {date}\n Item Name: {ItemName} ({ItemQuantity}) = ${TotalPrice}\nLocation: {Location}");
+            }
+            connection.Close();
+        }
+
+        public void DisplayALLStoreOrderHistory()
+        {
+            string connectionString = File.ReadAllText("C:/Users/rootb/Revature/Database_File/ConnectBikeShop.txt");
+            using SqlConnection connection = new(connectionString);
+            connection.Open();
+            using IDbCommand command = new SqlCommand(@$"SELECT Invoices.InvoiceId, InvoiceHistory.InvoiceDate, 
+	                                                    InvoiceList.ItemName, InvoiceList.ItemQuantity, 
+	                                                    InvoiceList.TotalPrice, StoreLocations.StoreLocation
+                                                        FROM Invoices
+                                                        INNER JOIN InvoiceHistory ON InvoiceHistory.InvoiceId = Invoices.InvoiceId
+                                                        INNER JOIN InvoiceList ON InvoiceList.InvoiceId = Invoices.InvoiceId
+                                                        INNER JOIN StoreLocations On StoreLocations.StoreId = Invoices.StoreId
+                                                        ;", connection);
             using IDataReader reader = command.ExecuteReader();
             while (reader.Read())
             {
