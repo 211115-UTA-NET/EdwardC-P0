@@ -8,8 +8,9 @@ namespace Project_0App.App
 {
     public class NewCustomer
     {
+        DatabaseConnect database = new DatabaseConnect();
         // Add Method in Dec 11, 2021
-        public void EnterNewCustomer(ref MainProgram.Mode mymode)
+        public void EnterNewCustomer(ref MainProgram.Mode mymode, ref int CustomerId)
         {
             List<string> inputs = new List<string>();
             string? input;
@@ -26,11 +27,12 @@ namespace Project_0App.App
                         Console.Write("Last Name: "); 
                         break;
                     case 2: 
-                        Console.Write("Home Address: ");
-                        break;
-                    case 3: 
                         Console.Write("Phone Number: "); 
                         break;
+                    case 3: 
+                        Console.Write("Home Address: ");
+                        break;
+                    
                     case 4:
                         Console.Write("Username: ");
                         break;
@@ -43,6 +45,7 @@ namespace Project_0App.App
                     inputs.Add(input);
             }
 
+            database.AddCustomerToDatabase(inputs, ref CustomerId);
              mymode = MainProgram.Mode.CustomerRequest;
         }
     }
