@@ -86,8 +86,8 @@ CREATE TABLE InvoiceList
 (
 	InvoiceId INT NOT NULL,
 	ItemName VARCHAR(100) NOT NULL,
-	ItemQuanity INT NOT NULL,
-	TotalPrice INT NOT NULL,
+	ItemQuantity INT NOT NULL,
+	TotalPrice MONEY NOT NULL,
 	CONSTRAINT FK_InvoiceList_ItemName_ItemDetails FOREIGN KEY (ItemName) 
 	REFERENCES ItemDetails(ItemName),
 	CONSTRAINT FK_InvoiceList_InvoiceId_Invoices FOREIGN KEY (InvoiceId) 
