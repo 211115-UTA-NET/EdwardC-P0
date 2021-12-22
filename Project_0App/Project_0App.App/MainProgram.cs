@@ -2,7 +2,7 @@
 {
     public class MainProgram
     {
-        public enum Mode { Login, NewCustomer, ReturnedCustomer, Manager, CustomerRequest, ManagerRequest, SetOrder, ProcessOrder, Logout, Exit}
+        public enum Mode { Login, NewCustomer, CustomerRequest, ManagerRequest, SetOrder, Logout, Exit}
         public static void Main(string[] args)
         {
             bool programRun = true;
@@ -15,19 +15,18 @@
             // Call individual Class to run each purpose
             Login myLogin = new Login();
             NewCustomer newCustomer = new NewCustomer();
-            //ReturnedCustomer returnedCustomer = new ReturnedCustomer();
-            //Manager manager = new Manager();
             CustomerRequest customerRequest = new CustomerRequest();
             ManagerRequest managerRequest = new ManagerRequest();
             SetOrder setOrder = new SetOrder();
-            //ProcessOrder processOrder = new ProcessOrder();
             Logout processLogout = new Logout();
 
             while(programRun)
             {
                 switch(myMode)
                 {
-                    case Mode.Login: 
+                    case Mode.Login:
+                        CustomerId = 0;
+                        StoreId = 0;
                         Console.WriteLine("Log in"); 
                         myLogin.LoginScreen(ref myMode, ref CustomerId); 
                         break;
@@ -35,14 +34,6 @@
                         Console.WriteLine("\nNew Customer"); 
                         newCustomer.EnterNewCustomer(ref myMode, ref CustomerId); 
                         break;
-                    //case Mode.ReturnedCustomer: 
-                    //    Console.WriteLine("\nReturned Customer"); 
-                    //    returnedCustomer.EnterReturnedCustomer(ref myMode); 
-                    //    break;
-                    //case Mode.Manager: 
-                    //    Console.WriteLine("\nManager");
-                    //    //manager.EnterManager();
-                    //    break;
                     case Mode.CustomerRequest: 
                         Console.WriteLine("\nCumtomer Request"); 
                         customerRequest.EnterCustomerRequest(ref myMode, CustomerId, ref StoreId);
@@ -55,9 +46,6 @@
                         Console.WriteLine("\nSet Order");
                         setOrder.StartOrding(ref myMode, CustomerId, StoreId);
                         break;
-                    //case Mode.ProcessOrder: 
-                    //    Console.WriteLine("\nProcess Order"); 
-                    //    break;
                     case Mode.Logout: 
                         Console.WriteLine("\nLog out");
                         processLogout.SignoutOrOrderMore(ref myMode);
@@ -67,8 +55,8 @@
                         programRun = false; 
                         break;
                 }
-                //programRun = false;
             }
         }
     }
 }
+
