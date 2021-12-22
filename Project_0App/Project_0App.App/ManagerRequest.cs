@@ -6,58 +6,69 @@ using System.Threading.Tasks;
 
 namespace Project_0App.App
 {
-    public class ManagerRequest
+    public class ManagerRequest : Search
     {
+        /// <summary>
+        /// For Manager to check the store's inventory and Invoices
+        /// Also, search customer's name
+        /// </summary>
+        /// <param name="myMode"></param>
         public void EnterRequest(ref MainProgram.Mode myMode)
         {
-            DatabaseConnect db = new DatabaseConnect();
+            RetrieveDatabaseRecords retrieve = new RetrieveDatabaseRecords();
+            CheckDatabaseRecords check = new CheckDatabaseRecords();
             int userInput = 0;
-            Console.WriteLine("Hello Manager, How we can help you?\n");
+            Console.WriteLine("Hello Manager, How we can help you?");
 
             do
             {
-                Console.WriteLine("Enter the number followed by the menu:\n1 - Check Store Inventory\n2 - Check Store Invoice\n3 - Exit");
+                Console.WriteLine("\nEnter the number followed by the menu:\n1 - Check Store Inventory\n2 - Check Store Invoice\n3 - Search Customer \n4 - Exit");
                 if(int.TryParse(Console.ReadLine(), out userInput))
                 {
                     switch(userInput)
                     {
                         case 1:
-                            DisplayStoreInventory(db);
+                            DisplayStoreInventory(retrieve);
                             break;
                         case 2: 
-                            DisplayStoreHistory(db);
+                            DisplayStoreHistory(retrieve);
                             break;
                         case 3:
-                            myMode = MainProgram.Mode.Exit;
+                            SearchName(check);
+                            break;
+                        case 4:
+                            myMode = MainProgram.Mode.Login;
                             break;
                         default: 
                             Console.WriteLine("Your input is invalid. Pleas try again"); 
                             break;
                     }
+                    if (userInput == 4)
+                        break;
                 }
             } 
             while (true);
 
         }
 
-        private static void DisplayStoreInventory(DatabaseConnect db)
+        private static void DisplayStoreInventory(RetrieveDatabaseRecords retrieve)
         {
             int input = 0;
             do
             {
                 Console.WriteLine("Choose a store location or all location");
-                db.getStoreLocation();
+                retrieve.RetrieveStoreLocation();
                 Console.WriteLine("4) All of the Adove");
                 if (int.TryParse((Console.ReadLine()), out input))
                 {
                     if (1 <= input && input <= 3)
                     {
-                        db.RetrieveStoreItems(input);
+                        retrieve.RetrieveStoreItems(input);
                         break;
                     }
                     else if (input == 4)
                     {
-                        db.RetrieveAllStoreItems();
+                        retrieve.RetrieveAllStoreItems();
                         break;
                     }
                     else
@@ -71,24 +82,24 @@ namespace Project_0App.App
             while (true);
         }
 
-        private static void DisplayStoreHistory(DatabaseConnect db)
+        private static void DisplayStoreHistory(RetrieveDatabaseRecords retrieve)
         {
             int input = 0;
             do
             {
                 Console.WriteLine("Choose a store location or all location");
-                db.getStoreLocation();
+                retrieve.RetrieveStoreLocation();
                 Console.WriteLine("4) All of the Adove");
                 if (int.TryParse((Console.ReadLine()), out input))
                 {
                     if (1 <= input && input <= 3)
                     {
-                        db.DisplayStoreOrderHistory(input);
+                        retrieve.RetrieveStoreInvoices(input);
                         break;
                     }
                     else if (input == 4)
                     {
-                        db.DisplayALLStoreOrderHistory();
+                        retrieve.RetrieveALLStoreInvoices();
                         break;
                     }
                     else
@@ -100,6 +111,38 @@ namespace Project_0App.App
                 }
             }
             while (true);
+        }
+
+        private static void SearchName(CheckDatabaseRecords check)
+        {
+            string? searchName = "";
+            bool Found = false;
+
+            do
+            {
+                Console.WriteLine("Enter a customer's first name: ");
+                searchName = Console.ReadLine();
+
+                if (searchName != null)
+                {
+                    if (searchName != "")
+                    {
+                        Found = check.SearchCustomers(searchName);
+                        break;
+                    }
+                    else
+                        Console.WriteLine("Your input is  empty");
+                }   
+            }
+            while (true);
+
+            if (Found)
+            {
+                Console.WriteLine("The name that you enter is found.");
+            }
+            else
+                Console.WriteLine("The name that you enter is not found.");
+
         }
 
     }

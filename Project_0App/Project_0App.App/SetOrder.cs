@@ -8,21 +8,19 @@ namespace Project_0App.App
 {
     public class SetOrder
     {
-        private static void DisplayListofItems(DatabaseConnect db, int StoreId)
-        {
-            // Get Display items list that are avaiable in store location
-            db.RetrieveStoreItems(StoreId);
-        }
-
-        private static void getItemName()
-        {
-
-        }
-
+        /// <summary>
+        /// Customer start order items, Also it will check the item's quanity to 
+        /// see if it is approved or reject. 
+        /// when user choose to process, then transfer to ProcessOrder.cs
+        /// </summary>
+        /// <param name="myMode"></param> // Nothing change, but use to reference to Process Order.cs
+        /// <param name="CustomerId"></param> // Assign Customer Id
+        /// <param name="StoreId"></param> // Assign Store Location
         public void StartOrding(ref MainProgram.Mode myMode, int CustomerId, int StoreId)
         {
             // Access Class file
-            DatabaseConnect db = new DatabaseConnect();
+            RetrieveDatabaseRecords retrieve = new RetrieveDatabaseRecords();
+            CheckDatabaseRecords check = new CheckDatabaseRecords();
             ProcessOrder pOrder = new ProcessOrder();
 
             bool IsApproved = false;
@@ -35,13 +33,13 @@ namespace Project_0App.App
             List<int> userQuantity = new List<int>(); // user's Quantity
 
             List<string> itemNames = new List<string>(); // Store item name in list
-            db.AssignItemNameToList(ref itemNames, StoreId);
+            retrieve.RetrieveItemNameToList(ref itemNames, StoreId);
 
             do
             {
                 // prompt user to select item and how many quanity(s)
                 Console.WriteLine("Chose the items followed by list");
-                DisplayListofItems(db, StoreId);
+                DisplayListofItems(retrieve, StoreId);
 
                 do
                 {
@@ -76,7 +74,7 @@ namespace Project_0App.App
                     }
                 } while (true);
 
-                IsApproved = db.CheckItemQuantity(StoreId, tempNum2, itemNames[tempNum1 - 1]);
+                IsApproved = check.CheckItemQuantity(StoreId, tempNum2, itemNames[tempNum1 - 1]);
                 if(IsApproved)
                 {
                     Console.WriteLine("Your order is approved and add to you cart\n");
@@ -106,11 +104,17 @@ namespace Project_0App.App
                     while (true);
                 }
                 else
-                    Console.WriteLine("Your order is reject due to lack of quantity we have. Our apologies for the inconvenience. Please enter with different quanity");
+                    Console.WriteLine("Your order is reject due to lack of quantity we have. Our apologies for the inconvenience. Please enter with different quanity.\n");
             }
             while (OrderMore);
 
             pOrder.StartProcessOrder(ref myMode, CustomerId, StoreId, userItem, userQuantity);
+        }
+
+        private static void DisplayListofItems(RetrieveDatabaseRecords retrieve, int StoreId)
+        {
+            // Get Display items list that are avaiable in store location
+            retrieve.RetrieveStoreItems(StoreId);
         }
     }
 }

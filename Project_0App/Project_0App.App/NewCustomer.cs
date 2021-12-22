@@ -8,10 +8,15 @@ namespace Project_0App.App
 {
     public class NewCustomer
     {
-        DatabaseConnect database = new DatabaseConnect();
-        // Add Method in Dec 11, 2021
-        public void EnterNewCustomer(ref MainProgram.Mode mymode, ref int CustomerId)
+        /// <summary>
+        /// Get the information for new customer, then add to database (Customers and Login Table)
+        /// Then Change Customer RequestMode to myMode and return CustomerId too
+        /// </summary>
+        /// <param name="myMode"></param>
+        /// <param name="CustomerId"></param>
+        public void EnterNewCustomer(ref MainProgram.Mode myMode, ref int CustomerId)
         {
+            ModifyDatabaseRecords db = new ModifyDatabaseRecords();
             List<string> inputs = new List<string>();
             string? input;
 
@@ -41,12 +46,21 @@ namespace Project_0App.App
                         break;
                 }
                 input = Console.ReadLine();
+                if(i == 4)
+                {
+                    if(input?.Length >= 11)
+                    {
+                        Console.WriteLine("You enter more than 10 digit. Try again");
+                        input = null;
+                        i--;
+                    }
+                }
                 if (input != null)
                     inputs.Add(input);
             }
 
-            database.AddCustomerToDatabase(inputs, ref CustomerId);
-             mymode = MainProgram.Mode.CustomerRequest;
+            db.AddCustomerToDatabase(inputs, ref CustomerId);
+            myMode = MainProgram.Mode.CustomerRequest;
         }
     }
 }

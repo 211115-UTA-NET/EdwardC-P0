@@ -8,13 +8,22 @@ namespace Project_0App.App
 {
     public class CustomerRequest
     {
+        /// <summary>
+        /// Pick a location of store,
+        /// Give the menu choices to customer, then run code based on customer's choice
+        /// Menu: Order History, Item's Information, Store History, Ready to Order, and Exit
+        /// </summary>
+        /// <param name="myMode"></param>
+        /// <param name="CustomerId"></param>
+        /// <param name="StoreId"></param>
         public void EnterCustomerRequest(ref MainProgram.Mode myMode, int CustomerId, ref int StoreId)
         {
-            DatabaseConnect db = new DatabaseConnect();
+            //DatabaseConnect db = new DatabaseConnect();
+            RetrieveDatabaseRecords retrieve = new RetrieveDatabaseRecords();
             int input;
             bool TryAgain = true;
 
-            GetStoreLocation(db, ref StoreId);
+            GetStoreLocation(retrieve, ref StoreId);
 
             do
             {
@@ -25,14 +34,23 @@ namespace Project_0App.App
                     switch (input)
                     {
                         case 1:
-                            db.DisplayCustomerOrderHistory(CustomerId);
+                            Console.WriteLine("------------------------------ \nYour Invoices: ");
+                            retrieve.RetrieveCustomerInvoices(CustomerId);
+                            //db.DisplayCustomerOrderHistory(CustomerId);
+                            Console.WriteLine("------------------------------");
                             break;
                         case 2:
                             // Got to OrderDetail.cs
-                            db.DisplayOrderDetail();
+                            //db.DisplayOrderDetail();
+                            Console.WriteLine("------------------------------\nItem's Detail: \n");
+                            retrieve.RetrieveItemDetails();
+                            Console.WriteLine("------------------------------");
                             break;
-                        case 3: 
-                            db.DisplayStoreOrderHistory(StoreId);
+                        case 3:
+                            //db.DisplayStoreOrderHistory(StoreId);
+                            Console.WriteLine("------------------------------\nStore's Invoices: ");
+                            retrieve.RetrieveStoreInvoices(StoreId);
+                            Console.WriteLine("------------------------------");
                             break;
                         case 4:
                             // Go to SetOrder.cs
@@ -40,7 +58,7 @@ namespace Project_0App.App
                             break;
                         case 5:
                             // Exit
-                            myMode = MainProgram.Mode.Exit;
+                            myMode = MainProgram.Mode.Login;
                             break;
                         default:
                             TryAgain = true;
@@ -59,11 +77,11 @@ namespace Project_0App.App
             while(TryAgain);
         }
 
-        static void GetStoreLocation(DatabaseConnect db, ref int storeId)
+        static void GetStoreLocation(RetrieveDatabaseRecords retrieve, ref int storeId)
         {
             bool IsChoose = false;
             Console.WriteLine("Pick a location followed: ");
-            db.getStoreLocation();
+            retrieve.RetrieveStoreLocation();
 
             while(!IsChoose)
             {
