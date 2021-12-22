@@ -6,18 +6,15 @@ using System.Threading.Tasks;
 
 namespace Project_0App.App
 {
-    public class ReturnedCustomer : Person
+    public class ReturnedCustomer
     {
         public string? _Username { get; set; }
         public string? _Password { get; set; }
         public int _Id { get; set; }
 
-
-
-        // Add Method in Dec 11, 2021
         public void EnterReturnedCustomer(ref MainProgram.Mode myMode)
         {
-            DatabaseConnect db = new DatabaseConnect();
+            CheckDatabaseRecords check = new CheckDatabaseRecords();
             bool matching = false;
             int CustomerId = 0;
             bool IsManager = false;
@@ -37,16 +34,15 @@ namespace Project_0App.App
                 Console.Write("Enter your password: ");
                 _Password = Console.ReadLine();
 
-                matching = db.CheckUsernameAndPassword(_Username, _Password, ref CustomerId, ref IsManager);
+                matching = check.CheckUsernameAndPassword(_Username, _Password, ref CustomerId, ref IsManager);
                 if(!matching)
                 {
                     Console.WriteLine("Your username or password is invalid. Try again.");
                 }
-                Console.ReadLine();
             }
             while (!matching);
 
-            if(!matching)
+            if(!IsManager)
             {
                 myMode = MainProgram.Mode.CustomerRequest;
             }
@@ -54,12 +50,6 @@ namespace Project_0App.App
             {
                 myMode = MainProgram.Mode.ManagerRequest;
             }
-            //Console.WriteLine($"The customer 's id is {CustomerId}");
-        }
-
-        public void DisplayStoreOrderHistory()
-        {
-
         }
     }
 }

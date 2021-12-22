@@ -25,7 +25,7 @@ namespace Project_0App.App
                 Console.WriteLine($"{StoreId}) {Location}");
             }
             connection.Close();
-        }
+        }//
 
         public bool CheckUsernameAndPassword(string? User, string? Pass, ref int id, ref bool manager)
         {
@@ -54,7 +54,7 @@ namespace Project_0App.App
             connection.Close();
 
             return match;
-        }
+        }//
 
         public void AddCustomerToDatabase(List<string> userInput, ref int CustomerId)
         {
@@ -68,7 +68,7 @@ namespace Project_0App.App
                 connection);
             command.Parameters.AddWithValue("@firstName", userInput[0]);
             command.Parameters.AddWithValue("@lastName", userInput[1]);
-            command.Parameters.AddWithValue("@phoneNumber", Convert.ToInt32(userInput[2]));
+            command.Parameters.AddWithValue("@phoneNumber", userInput[2]);
             command.Parameters.AddWithValue("@Address", userInput[3]);
             command.ExecuteNonQuery();
             connection.Close();
@@ -100,7 +100,7 @@ namespace Project_0App.App
                 }
             }
             connection.Close();
-        }
+        }//
 
         public void DisplayOrderDetail()
         {
@@ -118,7 +118,7 @@ namespace Project_0App.App
                 Console.WriteLine($"Item Name: {ItemName}\nDetail:\n{ItemDetail}\nPrice: ${Price}\n");
             }
             connection.Close();
-        }
+        }//
 
         public void RetrieveStoreItems(int StoreId)
         {
@@ -142,7 +142,7 @@ namespace Project_0App.App
                 numLoop++;
             }
             connection.Close();
-        }
+        }//
 
         public void RetrieveAllStoreItems()
         {
@@ -166,7 +166,7 @@ namespace Project_0App.App
                 numLoop++;
             }
             connection.Close();
-        }
+        }//
 
         public decimal RetrieveInvoices(int num, string item, int quantity, ref List<decimal> TotalPrices)
         {
@@ -187,7 +187,7 @@ namespace Project_0App.App
             connection.Close();
             TotalPrices.Add(totalPrice);
             return totalPrice;
-        }
+        }//
 
         public bool CheckItemQuantity(int StoreId, int Quantity, string? Name)
         {
@@ -220,7 +220,7 @@ namespace Project_0App.App
             connection.Close();
 
             return result;
-        }
+        }//
 
         public void AssignItemNameToList(ref List<string> itemNames, int StoreId)
         {
@@ -235,7 +235,7 @@ namespace Project_0App.App
                 itemNames.Add(ItemName);
             }
             connection.Close();
-        }
+        }//
 
         public void DisplayCustomerOrderHistory(int CustomerId)
         {
@@ -263,7 +263,7 @@ namespace Project_0App.App
                 Console.WriteLine($"\nInvoice: {InvoiceId}, {date}\n Item Name: {ItemName} ({ItemQuantity}) = ${TotalPrice}\nLocation: {Location}");
             }
             connection.Close();
-        }
+        }//
 
         public void DisplayStoreOrderHistory(int StoreId)
         {
@@ -291,7 +291,7 @@ namespace Project_0App.App
                 Console.WriteLine($"\nInvoice: {InvoiceId}, {date}\n Item Name: {ItemName} ({ItemQuantity}) = ${TotalPrice}\nLocation: {Location}");
             }
             connection.Close();
-        }
+        }//
 
         public void DisplayALLStoreOrderHistory()
         {
@@ -319,7 +319,7 @@ namespace Project_0App.App
                 Console.WriteLine($"\nInvoice: {InvoiceId}, {date}\n Item Name: {ItemName} ({ItemQuantity}) = ${TotalPrice}\nLocation: {Location}");
             }
             connection.Close();
-        }
+        }//
 
         public void DecreaseStoreItems(int storeId, string? itemName, int itemQuantity)
         {
@@ -336,7 +336,7 @@ namespace Project_0App.App
             command.Parameters.AddWithValue("@StoreId", storeId);
             command.ExecuteNonQuery();
             connection.Close();
-        }
+        }//
 
         public void AddInvoicesTable(int customerId, int storeId)
         {
@@ -351,7 +351,7 @@ namespace Project_0App.App
             command.Parameters.AddWithValue("@store", storeId);
             command.ExecuteNonQuery();
             connection.Close();
-        }
+        }//
 
         public int GetLatestInvoiceId()
         {
@@ -371,7 +371,7 @@ namespace Project_0App.App
             }
             connection.Close();
             return getNum;
-        }
+        }//
 
         public void AddInvoiceHistory(int invoiceId, DateTime date)
         {
@@ -386,7 +386,7 @@ namespace Project_0App.App
             command.Parameters.AddWithValue("@InvoiceDate", date);
             command.ExecuteNonQuery();
             connection.Close();
-        }
+        }//
 
         public void AddInvoiceList(int invoiceId, string userItem, int userQuantity, decimal TotalPrice)
         {
@@ -403,6 +403,28 @@ namespace Project_0App.App
             command.Parameters.AddWithValue("@TotalPrice", TotalPrice);
             command.ExecuteNonQuery();
             connection.Close();
-        }
+        }//
+
+        public bool SearchCustomer(string name)
+        {
+            bool Found = false;
+            string connectionString = File.ReadAllText("C:/Users/rootb/Revature/Database_File/ConnectBikeShop.txt");
+            using SqlConnection connection = new(connectionString);
+            connection.Open();
+            using IDbCommand command = new SqlCommand($"SELECT FirstName FROM Customers WHERE FirstName = '{name}';", connection);
+            using IDataReader reader = command.ExecuteReader();
+            while (reader.Read())
+            {
+                string FirstName = reader.GetString(0);
+                if(FirstName != null)
+                {
+                    Found = true;
+                }
+                
+            }
+            connection.Close();
+
+            return Found;
+        }//
     }
 }
