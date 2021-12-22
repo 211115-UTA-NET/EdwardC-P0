@@ -5,28 +5,28 @@ namespace Project_0App.Tests;
 
 public class LoginTest
 {
-    [Fact]
-    public void Test1()
-    {
-        // Arrange
-        Login myLogin = new Login();
-        MainProgram.Mode myMode = MainProgram.Mode.Login;
-        int CustomerId = 0;
+    //[Fact]
+    //public void Test1()
+    //{
+    //    // Arrange
+    //    Login myLogin = new Login();
+    //    MainProgram.Mode myMode = MainProgram.Mode.Login;
+    //    int CustomerId = 0;
 
-        myLogin.LoginScreen(ref myMode, ref CustomerId);
+    //    myLogin.LoginScreen(ref myMode, ref CustomerId);
 
-        // Act
+    //    // Act
 
-        // Assert
-    }
+    //    // Assert
+    //}
 
-    [Fact]
-    public void Test2()
-    {
-        // Arrange
-        var myLogin = new Login();
+    //[Fact]
+    //public void Test2()
+    //{
+    //    // Arrange
+    //    var myLogin = new Login();
 
        
         
-    }
+    //}
 }
