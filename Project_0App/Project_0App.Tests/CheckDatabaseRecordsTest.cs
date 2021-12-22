@@ -14,13 +14,13 @@ namespace Project_0App.Tests
         public void CheckItemList()
         {
             // Arrange
-            var db = new DatabaseConnect();
+            var db = new RetrieveDatabaseRecords();
             List<string> itemNames = new List<string>();
-            string items = "Lizard Skins DSP Bar Tape V2 4.6mm, Odyssey Bluebird Single Speed, Shimano Altus FC-M311 Crankset, ";
+            string items = "Shimano Altus FC-M311 Crankset, ";
             string? result = "";
 
             //Act
-            db.AssignItemNameToList(ref itemNames, 1);
+            db.RetrieveItemNameToList(ref itemNames, 1);
             for(int i = 0; i < itemNames.Count; i++)
             {
                 result += $"{itemNames[i]}, ";
@@ -45,6 +45,35 @@ namespace Project_0App.Tests
 
             //Assert
             Assert.True(result);
+        }
+
+        [Theory]
+        [InlineData("Eddie")]
+        [InlineData("Jackie")]
+        public void Find_Customer(string name)
+        {
+            // Arrange
+            CheckDatabaseRecords check = new CheckDatabaseRecords();
+
+            //Act
+            bool result = check.SearchCustomers(name);
+
+            //Assert
+            Assert.True(result);
+        }
+
+        [Fact]
+        public void Cannot_Find_Customer()
+        {
+            // Arrange
+            string? name = "asdf";
+            CheckDatabaseRecords check = new CheckDatabaseRecords();
+
+            // Act
+            bool result = check.SearchCustomers(name);
+
+            // Asset
+            Assert.False(result);
         }
     }
 }
